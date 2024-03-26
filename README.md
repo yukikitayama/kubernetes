@@ -32,3 +32,10 @@ Steps
   - Update next config
     - Add `output: "standalone"` to JSON in `next.config` file.
     - https://github.com/vercel/next.js/discussions/60945 
+  - `docker build -t <iamge-name> .`
+- Test running in Docker container
+  - `docker run -p 3000:3000 <image-name>`
+- Push the Docker image to Docker Hub
+  - `docker push <repo-name>/<image-name>`
+- Create Kubernetes Deployment
+  - https://clouddevs.com/next/optimizing-for-kubernetes/
