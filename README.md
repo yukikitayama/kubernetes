@@ -44,6 +44,16 @@ Steps
 - Expose the deployment to Service
   - https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps#creating_a_service_of_type_loadbalancer
   - https://clouddevs.com/next/optimizing-for-kubernetes/
+  - Use `type: LoadBalancer`
   - `kubectl apply -f <service>.yaml`
 - `kubectl describe svc <service-name>` to get IP address of the webapp exposed
   - `LoadBalancer Ingress:` contains the IP address
+- Configure domain name to the service
+  - https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip
+  - Reserve a static IP address
+    - `gcloud compute addresses create <ip-address-name> --region <region-name>`
+    - `gcloud compute addresses describe demo-nextjs-app-ip --region us-west2` checks the actual reserved IP address in `address:`
+  - Put the reserved IP address to `loadBalancerIP: <reserved-ip-address>` in Service deployment YAML
+  - Go to Doman Name Record system to add A record with the reserved IP address
+    - In my case, go to **AWS Route53** and create A-record with the reserved IP address and new subdomain name 
+  
