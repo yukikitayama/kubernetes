@@ -39,3 +39,11 @@ Steps
   - `docker push <repo-name>/<image-name>`
 - Create Kubernetes Deployment
   - https://clouddevs.com/next/optimizing-for-kubernetes/
+  - `kubectl apply -f <deployment>.yaml`
+  - or `kubectl create deployment <deployment-name> --image=<docker-hub-repo-name>/<image-name>`
+- Expose the deployment to Service
+  - https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps#creating_a_service_of_type_loadbalancer
+  - https://clouddevs.com/next/optimizing-for-kubernetes/
+  - `kubectl apply -f <service>.yaml`
+- `kubectl describe svc <service-name>` to get IP address of the webapp exposed
+  - `LoadBalancer Ingress:` contains the IP address
