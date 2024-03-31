@@ -1,5 +1,31 @@
 # Kubernetes
 
+## Concept
+
+**Service** maps requests from outside Kuberneters to pods. Service is an object which listens to a port on the Node, and forward the requests from outside on the port, to a port of a pod. For example, if a pod is running a web application that external users visit, service is needed.
+
+With **NodePort**, users request to IP address of a Node with the port on the Node. **TargetPort** is a port on a pod. **Port** is port on the service and this port is connected to TargetPort. **NodePort** is a port on the Node. Only Port is the reuqired parameter. If the Node IP address changes, you need to re-configure this NodePort Service. Not for production, maybe for demo app and something temporary.
+
+**LoadBalancer** is the standard way to expose a service to the internet. But each service to be exposed need to have its own IP address that you need to pay. HTTP, no HTTPS (https://www.cloudflare.com/learning/ssl/why-is-http-not-secure)
+
+**Ingress** allows you to use HTTPS, centralize managing Services for each applications. Single URL allows to route to different services and implement SSL security.
+- https://stackoverflow.com/questions/44708272/how-to-access-a-kubernetes-service-through-https
+- https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+- https://cloud.google.com/kubernetes-engine/docs/concepts/ingress
+- https://www.cortex.io/post/understanding-kubernetes-services-ingress-networking
+
+NortPort, LoadBalancer, or Ingress?
+- https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
+
+**ClusterIP** is another type of Service, but it's not for external access. But if you use **Kuberneters Proxy** and use Kubernetes API, you can access to this Service. This should be for internal use. It's not a way to expose your application to the internet.
+
+## Docker
+
+- **Image** is the packaged files and metadata
+- **Container** is the running instance of the image.
+- `pip install --no-cache-dir -r requirements.txt` can keep a Docker image as small as possible.
+  - https://stackoverflow.com/questions/45594707/what-is-pips-no-cache-dir-good-for
+
 ## FastAPI
 
 FastAPI https://fastapi.tiangolo.com/#example
@@ -7,6 +33,16 @@ FastAPI https://fastapi.tiangolo.com/#example
 Deploy to Kubernetes
 - https://fastapi.tiangolo.com/deployment/docker/
 - https://sumanta9090.medium.com/deploying-a-fastapi-application-on-kubernetes-a-step-by-step-guide-for-production-d74faac4ca36
+
+Steps
+- Build Docker image
+- Run Docker container locally
+  - `docker run -p 80:80 <image-name>`
+  - Visit `localhost` in Chrome.
+- Push the Docker image to a repo
+- Deploy Deployment using the image to Kubernetes
+  - https://sumanta9090.medium.com/deploying-a-fastapi-application-on-kubernetes-a-step-by-step-guide-for-production-d74faac4ca36
+- Deploy Service to Kubernetes
 
 ## Next.js
 
