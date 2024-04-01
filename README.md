@@ -6,6 +6,13 @@
 
 With **NodePort**, users request to IP address of a Node with the port on the Node. **TargetPort** is a port on a pod. **Port** is port on the service and this port is connected to TargetPort. **NodePort** is a port on the Node. Only Port is the reuqired parameter. If the Node IP address changes, you need to re-configure this NodePort Service. Not for production, maybe for demo app and something temporary.
 
+Creating NodePort Service in GKE
+- https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps#creating_a_service_of_type_nodeport
+- Need to create **firewall rule** to allow TCP traffic on the node port
+  - `gcloud compute firewall-rules create test-node-port --allow tcp:NODE_PORT` will apply to all
+- Get node IP address by `kubectl get nodes --output wide` `EXTERNAL-IP`.
+- Open Chrome and `<EXTERNAL-IP>:<NODE_PORT>`
+
 **LoadBalancer** is the standard way to expose a service to the internet. But each service to be exposed need to have its own IP address that you need to pay. HTTP, no HTTPS (https://www.cloudflare.com/learning/ssl/why-is-http-not-secure)
 
 **Ingress** allows you to use HTTPS, centralize managing Services for each applications. Single URL allows to route to different services and implement SSL security.
@@ -13,6 +20,10 @@ With **NodePort**, users request to IP address of a Node with the port on the No
 - https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
 - https://cloud.google.com/kubernetes-engine/docs/concepts/ingress
 - https://www.cortex.io/post/understanding-kubernetes-services-ingress-networking
+
+**GKE Ingress**
+- Use **external Application Load Balancer** with Ingress
+- https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
 
 NortPort, LoadBalancer, or Ingress?
 - https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
