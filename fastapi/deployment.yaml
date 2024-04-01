@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-fastapi-deployment
+spec:
+  selector:
+    matchLabels:
+      app: demo-fastapi
+  template:
+    metadata:
+      labels:
+        app: demo-fastapi
+    spec:
+      containers:
+      - name: demo-fastapi
+        image: yukikitayama/demo-fastapi
+        # Need to specify to be able to connect
+        ports:
+        - containerPort: 80
