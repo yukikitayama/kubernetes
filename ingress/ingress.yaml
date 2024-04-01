@@ -1,0 +1,11 @@
+# https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer#creating_an_ingress_resource
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-ingress
+spec:
+  defaultBackend:
+    service:
+      name: demo-nextjs-app
+      port:
+        number: 3000
