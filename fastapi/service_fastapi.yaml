@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: demo-fastapi-service
 spec:
-  type: LoadBalancer
   selector:
     app: demo-fastapi
   ports:
   - protocol: TCP
     port: 80
     targetPort: 80
-  loadBalancerIP: 34.94.169.160
+  type: NodePort

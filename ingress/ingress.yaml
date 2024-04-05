@@ -3,9 +3,25 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: demo-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: ingress-global-ip
+    networking.gke.io/managed-certificates: managed-cert
+    ingressClassName: "gce"
 spec:
-  defaultBackend:
-    service:
-      name: demo-nextjs-app
-      port:
-        number: 3000
+  rules:
+  - http:
+      paths:
+      - path: /web
+        pathType: Prefix
+        backend:
+          service:
+            name: demo-nextjs-app-service
+            port:
+              number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: demo-fastapi-service
+            port:
+              number: 80

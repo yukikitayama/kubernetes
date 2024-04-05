@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: demo-fastapi-deployment
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: demo-fastapi
@@ -14,6 +15,12 @@ spec:
       containers:
       - name: demo-fastapi
         image: yukikitayama/demo-fastapi
-        # Need to specify to be able to connect
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "500Mi"
+          requests:
+            cpu: "100m"
+            memory: "500Mi"

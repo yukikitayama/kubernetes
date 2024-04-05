@@ -21,9 +21,27 @@ Creating NodePort Service in GKE
 - https://cloud.google.com/kubernetes-engine/docs/concepts/ingress
 - https://www.cortex.io/post/understanding-kubernetes-services-ingress-networking
 
+For GKE Ingress to be able to accept HTTPS requests from clients, the load balancer must have a certificate, and must have a private key. When the load balancer accepts an HTTPS request from clients, the traffic between the client and the load balancer is encrypted using TLS.
+
 **GKE Ingress**
 - Use **external Application Load Balancer** with Ingress
-- https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
+  - https://cloud.google.com/kubernetes-engine/docs/tutorials/http-balancer
+- Deploy a Deployment of application
+- Deploy a Service as `NodePort`
+  - `kubectl get svc <service-name>` to check the external IP isn't assined
+- Deploy an Ingress
+  - `kubectl get ingress <ingress-name>` to check the IP address automatically assigned.
+- Set up HTTPS between client and load balancer
+  - https://cloud.google.com/kubernetes-engine/docs/concepts/ingress-xlb#setting_up_https_tls_between_client_and_load_balancer
+  - https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
+  - Create SSL certificates
+    - https://cloud.google.com/load-balancing/docs/ssl-certificates/google-managed-certs
+- Reserve IP address global type
+  - `gcloud compute addresses <ip-address-name> --global`
+  - `gcloud compute addresses list` to get the IP address
+- Deploy Ingress
+- Add A record to DNS pointing at the reserved IP address
+- `kubectl describe managedcertificate managed-cer` and wait until `Domain Status: Active`
 
 NortPort, LoadBalancer, or Ingress?
 - https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
@@ -36,6 +54,12 @@ NortPort, LoadBalancer, or Ingress?
 - **Container** is the running instance of the image.
 - `pip install --no-cache-dir -r requirements.txt` can keep a Docker image as small as possible.
   - https://stackoverflow.com/questions/45594707/what-is-pips-no-cache-dir-good-for
+
+## SSL
+
+SSL certificate is necessary when establishing HTTPS Ingress. The following link is about how to use SSL for Ingress.
+
+https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs
 
 ## FastAPI
 
